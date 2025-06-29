@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h3 class="mb-4">أطفالك</h3>
+        <div class="row">
+            {% for child in children %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <img src="{{ url_for('static', filename='images/children/' + child.image) }}" class="card-img-top" alt="{{ child.name }}" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ child.name }}</h5>
+                        <p class="card-text">العمر: {{ child.age }} سنوات</p>
+                        <a href="{{ url_for('children.child_profile', child_id=child.id) }}" class="btn btn-outline-primary">عرض الملف</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h3 class="mb-4">جدول الأسبوع</h3>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="mt-3">الأحد</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>8:00 - 9:00</strong>: حصة الفنون والإبداع
+                    </li>
+                    <li class="list-group-item">
+                        <strong>9:00 - 9:30</strong>: وجبة الإفطار
+                    </li>
+                    <li class="list-group-item">
+                        <strong>9:30 - 10:30</strong>: أنشطة حركية في الملعب
+                    </li>
+                    <li class="list-group-item">
+                        <strong>10:30 - 11:30</strong>: تعلم الحروف العربية
+                    </li>
+                </ul>
+
+                <h5 class="mt-3">الإثنين</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>8:00 - 9:00</strong>: حصة الموسيقى والأناشيد
+                    </li>
+                    <li class="list-group-item">
+                        <strong>9:00 - 9:30</strong>: وجبة الإفطار
+                    </li>
+                    <li class="list-group-item">
+                        <strong>9:30 - 10:30</strong>: تعلم الأرقام والعد
+                    </li>
+                    <li class="list-group-item">
+                        <strong>10:30 - 11:30</strong>: ألعاب تعليمية جماعية
+                    </li>
+                </ul>
+
+                <h5 class="mt-3">الثلاثاء</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>8:00 - 9:00</strong>: رحلة ترفيهية (حديقة/مكتبة)
+                    </li>
+                    <li class="list-group-item">
+                        <strong>9:00 - 9:30</strong>: وجبة الإفطار
+                    </li>
+                    <li class="list-group-item">
+                        <strong>9:30 - 10:30</strong>: حصة القصص والحكايات
+                    </li>
+                    <li class="list-group-item">
+                        <strong>10:30 - 11:30</strong>: أنشطة علمية بسيطة
+                    </li>
+                </ul>
+
+                <h5 class="mt-3">الأربعاء</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>8:00 - 9:00</strong>: حصة التربية الإسلامية
+                    </li>
+                    <li class="list-group-item">
+                        <strong>9:00 - 9:30</strong>: وجبة الإفطار
+                    </li>
+                    <li class="list-group-item">
+                        <strong>9:30 - 10:30</strong>: تعلم الأشكال والألوان
+                    </li>
+                    <li class="list-group-item">
+                        <strong>10:30 - 11:30</strong>: مسرح العرائس
+                    </li>
+                </ul>
+
+                <h5 class="mt-3">الخميس</h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <strong>8:00 - 9:00</strong>: أنشطة الماء والرمل
+                    </li>
+                    <li class="list-group-item">
+                        <strong>9:00 - 9:30</strong>: وجبة الإفطار
+                    </li>
+                    <li class="list-group-item">
+                        <strong>9:30 - 10:30</strong>: حصة الرياضة
+                    </li>
+                    <li class="list-group-item">
+                        <strong>10:30 - 11:30</strong>: عرض مواهب الأطفال
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .list-group-item {
+        border-radius: 8px !important;
+        margin-bottom: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .list-group-item:hover {
+        background-color: var(--light-blue);
+        transform: translateX(-5px);
+    }
+
+    .card {
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .card-body h5 {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 8px;
+        display: inline-block;
+    }
+</style>
+
+{% endblock %}

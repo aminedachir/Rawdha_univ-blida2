@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}تسجيل جديد{% endblock %}
+
+{% block content %}
+<div class="register-section py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h3 class="mb-0 text-center">إنشاء حساب جديد</h3>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        <form method="POST" action="" class="needs-validation" novalidate>
+                            {{ form.hidden_tag() }}
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <h5 class="mb-3 text-primary">المعلومات الشخصية</h5>
+                                    
+                                    <div class="mb-3">
+                                        {{ form.username.label(class="form-label") }}
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            {{ form.username(class="form-control", placeholder="أدخل اسم المستخدم") }}
+                                        </div>
+                                        {% if form.username.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {% for error in form.username.errors %}
+                                                    {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        {{ form.email.label(class="form-label") }}
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                            {{ form.email(class="form-control", placeholder="example@university.edu") }}
+                                        </div>
+                                        {% if form.email.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {% for error in form.email.errors %}
+                                                    {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h5 class="mb-3 text-primary">معلومات الحساب</h5>
+                                    
+                                    <div class="mb-3">
+                                        {{ form.role.label(class="form-label") }}
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-user-tag"></i></span>
+                                            {{ form.role(class="form-select") }}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        {{ form.registration_number.label(class="form-label") }}
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                            {{ form.registration_number(class="form-control", placeholder="الرقم الوظيفي أو الجامعي") }}
+                                        </div>
+                                        {% if form.registration_number.errors %}
+                                            <div class="invalid-feedback d-block">
+                                                {% for error in form.registration_number.errors %}
+                                                    {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <hr class="my-4">
+                                    <h5 class="mb-3 text-primary">كلمة المرور</h5>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        {{ form.password.label(class="form-label") }}
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                            {{ form.password(class="form-control", placeholder="كلمة مرور قوية") }}
+                                            <button class="btn btn-outline-secondary toggle-password" type="button">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <div class="form-text">يجب أن تحتوي على 8 أحرف على الأقل</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        {{ form.confirm_password.label(class="form-label") }}
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                            {{ form.confirm_password(class="form-control", placeholder="تأكيد كلمة المرور") }}
+                                            <button class="btn btn-outline-secondary toggle-password" type="button">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="form-check mb-4">
+                                        <input class="form-check-input" type="checkbox" id="agreeTerms" required>
+                                        <label class="form-check-label" for="agreeTerms">
+                                            أوافق على <a href="#" class="text-primary">الشروط والأحكام</a> و <a href="#" class="text-primary">سياسة الخصوصية</a>
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="d-grid">
+                                        {{ form.submit(class="btn btn-primary btn-lg") }}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center mt-4">
+                            <p class="mb-0">لديك حساب بالفعل؟ <a href="{{ url_for('login') }}" class="text-primary">سجل الدخول الآن</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('.toggle-password').forEach(button => {
+    button.addEventListener('click', function() {
+        const input = this.parentElement.querySelector('input');
+        const icon = this.querySelector('i');
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    });
+});
+
+// Form validation
+(function () {
+    'use strict'
+    
+    const forms = document.querySelectorAll('.needs-validation')
+    
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+</script>
+{% endblock %}

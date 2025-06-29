@@ -1,0 +1,59 @@
+body {
+    font-family: 'Tahoma', 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    direction: rtl;
+    text-align: right;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 20px;
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.btn-primary {
+    background-color: #4e73df;
+    border-color: #4e73df;
+}
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+    border-color: #2653d4;
+}
+
+.alert {
+    margin-top: 20px;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.form-control {
+    margin-bottom: 15px;
+}
+
+/* RTL specific styles */
+.form-select {
+    padding-right: 0.75rem;
+    padding-left: 2.25rem;
+}
+
+/* Custom styles for the kindergarten theme */
+.kinder-primary {
+    color: #fff;
+    background-color: #ff6b6b;
+}
+
+.kinder-secondary {
+    color: #fff;
+    background-color: #4ecdc4;
+}
