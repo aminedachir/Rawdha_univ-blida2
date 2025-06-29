@@ -21,9 +21,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 children_bp = Blueprint('children', __name__)
 
 def get_booking(booking_id):
-    db = Session(engine)  
-    booking = db.get(Booking, booking_id)  
-    db.close()
+    booking = db.session.get(Booking, booking_id)
     return booking
 
 UPLOAD_FOLDER = 'static/images/children'
@@ -93,9 +91,9 @@ class WeeklySchedule(db.Model):
 
 with app.app_context():
     try:
-        db.engine.execute('ALTER TABLE child ADD COLUMN date_created DATETIME')
-        
-        db.engine.execute('UPDATE child SET date_created = ?', (datetime.utcnow(),))
+        from sqlalchemy import text
+        db.session.execute(text('ALTER TABLE child ADD COLUMN date_created DATETIME'))
+        db.session.execute(text('UPDATE child SET date_created = :date'), {'date': datetime.utcnow()})
         db.session.commit()
     except Exception as e:
         print("Column already exists or other error:", e)
