@@ -53,6 +53,7 @@ class Child(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     age = db.Column(db.Integer, nullable=False)
+    gender = db.Column(db.String(10), nullable=False)  # Add this line
     image = db.Column(db.String(20), nullable=False, default='default.jpg')
     health_status = db.Column(db.Text, nullable=True)
     parent_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -122,6 +123,10 @@ class LoginForm(FlaskForm):
 class ChildForm(FlaskForm):
     name = StringField('اسم الطفل', validators=[DataRequired()])
     age = IntegerField('العمر', validators=[DataRequired(), NumberRange(min=1, max=6)])
+    gender = SelectField('الجنس', choices=[  # Add this field
+        ('ذكر', 'ذكر'),
+        ('أنثى', 'أنثى')
+    ], validators=[DataRequired()])
     health_status = TextAreaField('الوضع الصحي')
     submit = SubmitField('حفظ')
 
@@ -223,6 +228,7 @@ def manage_children():
         child = Child(
             name=form.name.data,
             age=form.age.data,
+            gender=form.gender.data,  # Add this line
             health_status=form.health_status.data,
             parent_id=current_user.id,
             image=image_file
@@ -237,6 +243,22 @@ def manage_children():
                          title='إدارة الأطفال', 
                          form=form, 
                          children=children)
+
+@app.route('/child/<int:child_id>/delete', methods=['POST'])
+@login_required
+def delete_child(child_id):
+    child = Child.query.get_or_404(child_id)
+    if child.parent_id != current_user.id:
+        flash('ليس لديك صلاحية لحذف هذا الطفل', 'danger')
+        return redirect(url_for('manage_children'))
+    
+    Booking.query.filter_by(child_id=child_id).delete()
+    Attendance.query.filter_by(child_id=child_id).delete()
+    
+    db.session.delete(child)
+    db.session.commit()
+    flash('تم حذف الطفل بنجاح', 'success')
+    return redirect(url_for('manage_children'))
 
 @children_bp.route('/child/<int:child_id>')
 @login_required
@@ -337,6 +359,10 @@ def payment_success(booking_id):
     return render_template('payments/payment_success.html', 
                          title='تم الدفع بنجاح', 
                          booking=booking)
+
+@app.route('/regulations')
+def regulations():
+    return render_template('main/regulations.html', title='القانون الداخلي للروضة')
 
 payments_bp = Blueprint('payments', __name__, template_folder='templates')
 app.register_blueprint(children_bp, url_prefix='/children')

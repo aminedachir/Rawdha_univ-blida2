@@ -35,6 +35,12 @@
                                 {{ form.age.label(class="form-label") }}
                                 {{ form.age(class="form-control") }}
                             </div>
+
+                            <div class="col-md-3">
+                                {{ form.gender.label(class="form-label") }}
+                                {{ form.gender(class="form-select") }}
+                            </div>
+    
                             
                             <div class="col-12">
                                 {{ form.health_status.label(class="form-label") }}
@@ -64,6 +70,7 @@
                                     <th>الصورة</th>
                                     <th>الاسم</th>
                                     <th>العمر</th>
+                                    <th>الجنس</th>
                                     <th>الإجراءات</th>
                                 </tr>
                             </thead>
@@ -72,25 +79,28 @@
                                 <tr>
                                     <td>
                                         <img src="{{ url_for('static', filename='images/children/' + child.image) }}" 
-                                             class="rounded-circle" 
-                                             width="40" 
-                                             height="40" 
-                                             alt="{{ child.name }}">
+                                            class="rounded-circle" 
+                                            width="40" 
+                                            height="40" 
+                                            alt="{{ child.name }}">
                                     </td>
                                     <td>{{ child.name }}</td>
                                     <td>{{ child.age }} سنوات</td>
+                                    <td>{{ child.gender }}</td>
                                     <td>
                                         <a href="{{ url_for('children.child_profile', child_id=child.id) }}" class="btn btn-sm btn-outline-primary">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="#" class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
+                                        <form action="{{ url_for('delete_child', child_id=child.id) }}" method="POST" style="display: inline;">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('هل أنت متأكد أنك تريد حذف هذا الطفل؟')">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 {% else %}
                                 <tr>
-                                    <td colspan="4" class="text-center text-muted py-4">
+                                    <td colspan="5" class="text-center text-muted py-4">
                                         لا يوجد أطفال مسجلين
                                     </td>
                                 </tr>
